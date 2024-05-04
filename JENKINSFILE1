@@ -27,7 +27,7 @@ pipeline {
         stage(' SONAR ') {
             	steps {
                 echo 'SONAR CODE QUALITY REVIEW'
-		      sh 'mvn sonar:sonar '
+		      sh 'mvn sonar:sonar'
   		        }
         }
     stage('build') {
