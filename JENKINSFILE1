@@ -31,7 +31,7 @@ pipeline {
         stage('deploy to tomcat') {
             		steps {
                 		echo 'tomcat deploy'
-deploy adapters: [tomcat9(credntialisId: 'tomcat', path: '',url:'http://34.229.184.18:8091/')], contextpath: 'jyo-batch13', war: '**/*.war'
+ deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://34.229.184.18:8091/')], contextPath: 'mc-app-facebook', war: '**/*.war'
 			    }
       }
           }
