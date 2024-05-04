@@ -206,7 +206,19 @@
         </dependency>
     </dependencies>
 
-    <modules>
+<distributionManagement>
+		 <snapshotRepository>
+		    <id>nexusRepo</id>
+		    <url>http://54.236.51.216:8081/repository/b13-repository-snapshots/</url>
+		 </snapshotRepository>
+		
+		<repository>
+		    <id>nexusRepo</id>
+		    <url>http://54.236.51.216:8081/repository/b13-repository/</url>
+		</repository>
+  	</distributionManagement>    
+
+ <modules>
         <module>gameoflife-build</module>
         <module>gameoflife-core</module>
         <module>gameoflife-web</module>
