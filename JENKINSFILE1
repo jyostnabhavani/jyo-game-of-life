@@ -1,0 +1,53 @@
+pipeline {
+    agent any
+	tools {
+    	jdk 'jdk8'
+	}
+	stages {
+            stage('git') {
+              steps {
+                echo 'scm'
+		git branch: 'main', url: 'https://github.com/jyostnabhavani/mindcircuit13.git'
+            }
+        }
+	stage('Parallel Stage') {
+            steps {
+                script {
+                  def parallelTasks = [:]
+                    parallelTasks["Task 1"] = {
+                    sh 'mvn -version'
+                    }
+                    parallelTasks["Task 2"] = {
+                          sh 'java -version'
+                    }
+                  parallel parallelTasks
+                }
+	        }
+            }
+        stage(' SONAR ') {
+            	steps {
+                echo 'SONAR CODE QUALITY REVIEW'
+		      sh 'mvn sonar:sonar '
+  		        }
+        }
+    stage('build') {
+            steps {
+                echo 'generating artifact using maven build tool'
+		        sh 'mvn clean install'
+  	    }
+        }
+            stage('nexus artifactory') {
+            steps {
+                echo 'publish to nexus'
+		sh 'mvn deploy'
+      }
+   }
+        stage('deploy to tomcat') {
+            		steps {
+                		echo 'tomcat deploy'
+				deploy adapters: [tomcat9(credntialisId: 'tomcat', path: '',url:
+				'http://34.229.184.18:8091/')], contextpath: 'mc-app-batch13', war: '**/*.war'
+			    }
+      }
+          }
+}
